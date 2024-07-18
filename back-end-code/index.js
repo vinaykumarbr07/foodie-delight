@@ -15,7 +15,6 @@ app.get('/restaurants',(req,res)=>{
 });
 
 app.post('/restaurants',(req,res)=> {
-    console.log(req)
     restaurant.push(req.body);
 
     res.json({
@@ -24,7 +23,6 @@ app.post('/restaurants',(req,res)=> {
 })
 
 app.put('/restaurants/:id',(req,res)=>{
-    console.log(req.body)
     const newData = req.body;
     const resId = Number(req.params.id);
 
@@ -46,7 +44,6 @@ app.put('/restaurants/:id',(req,res)=>{
 })
 
 app.delete('/restaurants/:id',(req,res)=> {
-    console.log(req.params.id)
     const resId = Number(req.params.id);
 
     const restuarantIndex = restaurant.findIndex(restuarant=> restuarant.id === resId);

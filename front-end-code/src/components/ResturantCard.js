@@ -1,17 +1,19 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import '../App.css';
-import HandleDialog from "../utils/HandleDialog";
-import {useContext}from 'react';
 import Alert from '@mui/material/Alert';
+import { useDispatch, useSelector } from "react-redux";
+import {setDialogOpen, setRestauranInfo, setRecordUpdated} from '../utils/restaurantSlice';
 
 const RestaurantCard = ({restuarantDetail}) => {
     const {name, description, location, id } = restuarantDetail;
-    const {isDialogOpen, setDialogOpen} = useContext(HandleDialog);
+    const dispatch = useDispatch();
+    const isDialogOpen = useSelector(store=> store.resReducer.isDialogOpen);
 
     const editRestaurantInfo = (e) => {
         if (!isDialogOpen) {
-            setDialogOpen(true);
+            dispatch(setRestauranInfo({id, name, description, location}));
+            dispatch(setDialogOpen(true));
         }
     }
 
@@ -24,6 +26,7 @@ const RestaurantCard = ({restuarantDetail}) => {
 
         if (response.ok) {
             <Alert severity="info">Record Deleted</Alert>
+            dispatch(setRecordUpdated(true));
         } else {
             <Alert severity="info">Failed to Delete record</Alert>
         }

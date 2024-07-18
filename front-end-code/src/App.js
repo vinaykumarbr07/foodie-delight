@@ -2,19 +2,19 @@ import Header from './components/Header';
 import Body from './components/Body';
 import { createBrowserRouter, Outlet} from 'react-router-dom';
 import './App.css';
-import HandleDialog from './utils/HandleDialog';
 import { useState } from 'react';
+import {Provider} from 'react-redux';
+import store from './utils/store';
+import Error from './components/Error';
 
 const AppLayout = () => {
-  const [isDialogOpen, setDialogOpen] = useState(false);
-
   return (
-      <HandleDialog.Provider value={{isDialogOpen, setDialogOpen}}>
-      <div className="App">
-        <Header/>
-        <Outlet/>
-      </div>
-      </HandleDialog.Provider>
+      <Provider store={store}>
+        <div className="App">
+          <Header/>
+          <Outlet/>
+        </div>
+      </Provider>
   );
 }
 
@@ -27,7 +27,8 @@ const appRouter = createBrowserRouter([
         path:'/',
         element:<Body/>
       }
-    ]
+    ],
+    errorElement: <Error/>
   }
 ])
 
