@@ -1,19 +1,21 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
+
 import { restaurant } from './restaurant-data.js';
 
 const app = express();
 
 app.use(bodyParser.json());
 
-
+app.use(cors());
 
 app.get('/restaurants',(req,res)=>{
     res.json(restaurant);
 });
 
 app.post('/restaurants',(req,res)=> {
-    console.log(req.body)
+    console.log(req)
     restaurant.push(req.body);
 
     res.json({

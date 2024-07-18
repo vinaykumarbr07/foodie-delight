@@ -1,25 +1,34 @@
-import logo from './logo.svg';
+import Header from './components/Header';
+import Body from './components/Body';
+import { createBrowserRouter, Outlet} from 'react-router-dom';
 import './App.css';
+import HandleDialog from './utils/HandleDialog';
+import { useState } from 'react';
 
-function App() {
+const AppLayout = () => {
+  const [isDialogOpen, setDialogOpen] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <HandleDialog.Provider value={{isDialogOpen, setDialogOpen}}>
+      <div className="App">
+        <Header/>
+        <Outlet/>
+      </div>
+      </HandleDialog.Provider>
   );
 }
 
-export default App;
+const appRouter = createBrowserRouter([
+  {
+    path: '/',
+    element: <AppLayout/>,
+    children:[
+      {
+        path:'/',
+        element:<Body/>
+      }
+    ]
+  }
+])
+
+export default appRouter ;
